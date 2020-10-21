@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.company</groupId>
+	<artifactId>quartzexample</artifactId>
+	<version>1.0.0.-SNAPSHOT</version>
+	<packaging>war</packaging>
+	
+	<name>QuartzExample</name>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>sonatype-nexus-snapshots</id>
+			<name>Sonatype Nexus Snapshots</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.rapidclipse</groupId>
+			<artifactId>rap-server-core</artifactId>
+			<version>10.02.02-RAP-GA</version>
+		</dependency>
+		
+		<!-- TASK SCHEDULING -->
+		<!-- Exclusions: See https://stackoverflow.com/questions/49022204/system-cant-find-mchange-commons-java-0-2-11 -->
+		<!-- https://github.com/quartz-scheduler/quartz/issues/565 -->
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>2.3.2</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.mchange</groupId>
+					<artifactId>c3p0</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.zaxxer</groupId>
+					<artifactId>HikariCP-java7</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.0</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.2.2</version>
+				<configuration>
+					<warName>${project.name}</warName>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
